@@ -16,7 +16,7 @@ const getFloatChatResponse = (message, chatMode) => {
       modeType: 'text',
       content: {
         type: 'text',
-        text: "The *average depth* is about *3,688 meters*. The deepest point is the Challenger Deep (Mariana Trench) at nearly 11 km.",
+        text: "The *average depth* is about *3,688 meters*. Threacte deepest point is the Challenger Deep (Mariana Trench) at nearly 11 km.",
       }
     },
     'thermohaline circulation': {
@@ -162,7 +162,7 @@ const getFloatChatResponse = (message, chatMode) => {
       sender: 'ai',
       timestamp: Date.now(),
       type: 'text',
-      text: I found data, but **Standard Query** only allows text. To view the **${visualType}**, please switch to the **${suggestedMode}** mode.,
+      text: `I found data, but **Standard Query** only allows text. To view the **${visualType}**, please switch to the **${suggestedMode}** mode.`,
     };
   } else if (chatMode === 'visual' && responseMode === 'map') {
     return {
@@ -234,7 +234,7 @@ const MockMap = ({ data, mapContext }) => {
         <Compass className="w-4 h-4 mr-2 text-green-600" />
         {mapContext}
       </h3>
-      <svg viewBox={0 0 ${mapWidth} ${mapHeight}} width={size.width} height={size.height} preserveAspectRatio="xMidYMid meet" className="bg-blue-100/50 border border-blue-300 rounded-md shadow-inner">
+      <svg viewBox={`0 0 ${mapWidth} ${mapHeight}`} width={size.width} height={size.height} preserveAspectRatio="xMidYMid meet" className="bg-blue-100/50 border border-blue-300 rounded-md shadow-inner">
         {/* Ocean Background */}
         <rect x="0" y="0" width={mapWidth} height={mapHeight} fill="#70A0FF" />
         {/* Mock Landmass: Simplified global continents for context */}
@@ -255,7 +255,7 @@ const MockMap = ({ data, mapContext }) => {
               strokeWidth="3"
               className="transition-all duration-300 hover:scale-150 cursor-pointer"
             >
-              <title>{${point.name} (${point.status}) - Lat: ${point.lat}°, Lon: ${point.lon}°}</title>
+              <title>{`${point.name} (${point.status}) - Lat: ${point.lat}°, Lon: ${point.lon}°`}</title>
             </circle>
           </g>
         ))}
@@ -343,8 +343,8 @@ const ChatMessage = ({ message }) => {
   };
 
   return (
-    <div className={max-w-4/5 md:max-w-3/4 mb-4 flex flex-col ${alignmentClass}}>
-      <div className={px-4 py-3 rounded-xl shadow-lg ${messageClass}}>
+    <div className={`max-w-4/5 md:max-w-3/4 mb-4 flex flex-col ${alignmentClass}`}>
+      <div className={`px-4 py-3 rounded-xl shadow-lg ${messageClass}`}>
         <p className="whitespace-pre-wrap leading-relaxed">{renderText(message.text)}</p>
 
         {/* Conditional Visual Output */}
@@ -355,7 +355,7 @@ const ChatMessage = ({ message }) => {
           <MockMap data={message.data} mapContext={message.mapContext} />
         )}
       </div>
-      <span className={text-xs mt-1 text-gray-500 ${isAI ? 'text-left' : 'text-right'}}>
+      <span className={`text-xs mt-1 text-gray-500 ${isAI ? 'text-left' : 'text-right'}`}>
         {isAI ? 'FloatChat AI' : 'You'}
       </span>
     </div>
@@ -393,19 +393,19 @@ const OnboardingContent = ({ onStartChat, toggleSidebar }) => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl mb-12">
                 {modes.map((mode) => {
                 const Icon = mode.icon;
-                const colorClass = border-${mode.color}-500;
+                const colorClass = `border-${mode.color}-500`;
                 return (
                     <div
                     key={mode.key}
-                    className={bg-white p-6 rounded-xl shadow-lg border-t-4 ${colorClass} transition hover:shadow-xl hover:scale-[1.02] cursor-pointer}
+                    className={`bg-white p-6 rounded-xl shadow-lg border-t-4 ${colorClass} transition hover:shadow-xl hover:scale-[1.02] cursor-pointer`}
                     onClick={() => onStartChat(mode.key)}
                     >
-                    <Icon className={w-6 h-6 text-${mode.color}-500 mb-3} />
+                    <Icon className={`w-6 h-6 text-${mode.color}-500 mb-3`} />
                     <h3 className="font-bold text-xl mb-2 text-gray-800">{mode.title}</h3>
                     <p className="text-sm text-gray-500">{mode.description.replace(/\\/g, '')}</p>
                     
                     <button
-                        className={mt-4 w-full py-2 text-white font-semibold rounded-lg bg-${mode.color}-600 hover:bg-${mode.color}-700 transition}
+                        className={`mt-4 w-full py-2 text-white font-semibold rounded-lg bg-${mode.color}-600 hover:bg-${mode.color}-700 transition`}
                     >
                         Start in {mode.title}
                     </button>
@@ -459,36 +459,33 @@ const Sidebar = ({ chatMode, onModeChange, isSidebarOpen, setIsSidebarOpen, isHo
     return (
         // Sidebar container with hover handlers
         <div 
-            className={`
-                ${widthClass} bg-gray-900 flex-shrink-0 flex flex-col justify-between text-white p-2 md:p-4 
-                transition-all duration-300 overflow-x-hidden relative z-20
-            `}
+            className={`${widthClass} bg-gray-900 flex-shrink-0 flex flex-col justify-between text-white p-2 md:p-4 transition-all duration-300 overflow-x-hidden relative z-20`}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
             
             {/* Logo/Title & Desktop Collapse Button */}
-            <div className={flex items-center mb-6 pb-4 border-b border-gray-700}>
-                <Globe className={w-8 h-8 text-blue-500 ${isDisplayedOpen ? 'mr-2' : 'mx-auto'}} />
+            <div className={`flex items-center mb-6 pb-4 border-b border-gray-700`}>
+                <Globe className={`w-8 h-8 text-blue-500 ${isDisplayedOpen ? 'mr-2' : 'mx-auto'}`} />
                 {/* Use isDisplayedOpen to show text */}
                 {isDisplayedOpen && <span className="text-xl font-extrabold hidden md:inline">FloatChat AI</span>}
                 
                 {/* Desktop Collapse Button (Info Icon) */}
                 <button
-                    className={hidden md:block absolute top-4 ${isDisplayedOpen ? 'right-4' : 'right-0 -mr-8'} p-2 text-white transition transform}
+                    className={`hidden md:block absolute top-4 ${isDisplayedOpen ? 'right-4' : 'right-0 -mr-8'} p-2 text-white transition transform`}
                     // Toggles the persistent state (isSidebarOpen)
                     onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
                     aria-label={isSidebarOpen ? 'Collapse Sidebar' : 'Expand Sidebar'}
                 >
-                    <Info className={w-5 h-5 transition transform ${isDisplayedOpen ? 'rotate-180' : 'rotate-0'}} />
+                    <Info className={`w-5 h-5 transition transform ${isDisplayedOpen ? 'rotate-180' : 'rotate-0'}`} />
                 </button>
             </div>
             
             <div className="flex-1 space-y-2">
                 {/* Current Mode Display (Always visible) */}
-                <div className={p-3 bg-gray-800 rounded-lg border border-gray-700}>
-                    <div className={flex items-center text-sm font-semibold ${!isDisplayedOpen ? 'justify-center' : ''}}>
-                        <currentMode.icon className={w-4 h-4 ${isDisplayedOpen ? 'mr-2' : 'mx-auto'}} />
+                <div className={`p-3 bg-gray-800 rounded-lg border border-gray-700`}>
+                    <div className={`flex items-center text-sm font-semibold ${!isDisplayedOpen ? 'justify-center' : ''}`}>
+                        <currentMode.icon className={`w-4 h-4 ${isDisplayedOpen ? 'mr-2' : 'mx-auto'}`} />
                         {isDisplayedOpen && <span className="hidden md:inline">{currentMode.title}</span>}
                     </div>
                 </div>
@@ -500,7 +497,7 @@ const Sidebar = ({ chatMode, onModeChange, isSidebarOpen, setIsSidebarOpen, isHo
                         onClick={item.action}
                         className="flex items-center w-full p-3 rounded-lg text-gray-300 hover:bg-gray-700 transition"
                     >
-                        <item.icon className={w-5 h-5 flex-shrink-0 ${!isDisplayedOpen ? 'mx-auto' : ''}} />
+                        <item.icon className={`w-5 h-5 flex-shrink-0 ${!isDisplayedOpen ? 'mx-auto' : ''}`} />
                         {isDisplayedOpen && <span className="ml-3 hidden md:inline">{item.name}</span>}
                     </button>
                 ))}
@@ -510,7 +507,7 @@ const Sidebar = ({ chatMode, onModeChange, isSidebarOpen, setIsSidebarOpen, isHo
                     onClick={onModeChange}
                     className="flex items-center w-full p-3 rounded-lg font-semibold bg-blue-700 hover:bg-blue-600 transition shadow-md mt-4"
                 >
-                    <Compass className={w-5 h-5 flex-shrink-0 ${!isDisplayedOpen ? 'mx-auto' : ''}} />
+                    <Compass className={`w-5 h-5 flex-shrink-0 ${!isDisplayedOpen ? 'mx-auto' : ''}`} />
                     {isDisplayedOpen && <span className="ml-3 hidden md:inline">Change Mode</span>}
                 </button>
             </div>
@@ -518,7 +515,7 @@ const Sidebar = ({ chatMode, onModeChange, isSidebarOpen, setIsSidebarOpen, isHo
             {/* Footer / User Placeholder */}
             <div className="pt-4 border-t border-gray-800 mt-4">
                 <div className="flex items-center p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition">
-                    <User className={w-5 h-5 ${!isDisplayedOpen ? 'mx-auto' : ''}} />
+                    <User className={`w-5 h-5 ${!isDisplayedOpen ? 'mx-auto' : ''}`} />
                     {isDisplayedOpen && <span className="ml-3 hidden md:inline">User 123</span>}
                 </div>
             </div>
@@ -561,7 +558,7 @@ const ChatInterface = ({ chatHistory, handleSendMessage, chatMode, toggleSidebar
   }[chatMode] || { title: 'FloatChat', color: 'text-gray-900', icon: Globe, colorCode: 'gray' };
 
   const ModeIcon = modeDisplay.icon;
-  const buttonClass = bg-${modeDisplay.colorCode}-600 hover:bg-${modeDisplay.colorCode}-700;
+  const buttonClass = `bg-${modeDisplay.colorCode}-600 hover:bg-${modeDisplay.colorCode}-700`;
 
   return (
     <div className="flex-1 flex flex-col bg-white">
@@ -572,8 +569,8 @@ const ChatInterface = ({ chatHistory, handleSendMessage, chatMode, toggleSidebar
                 <Menu className="w-6 h-6" /> 
             </button>
 
-            <ModeIcon className={w-7 h-7 ${modeDisplay.color} mr-3} />
-            <h2 className={text-2xl font-extrabold ${modeDisplay.color}}>{modeDisplay.title}</h2>
+            <ModeIcon className={`w-7 h-7 ${modeDisplay.color} mr-3`} />
+            <h2 className={`text-2xl font-extrabold ${modeDisplay.color}`}>{modeDisplay.title}</h2>
             <span className="text-sm font-semibold text-gray-500 ml-2 hidden sm:inline">Mode Active</span>
 
             <button
@@ -611,14 +608,14 @@ const ChatInterface = ({ chatHistory, handleSendMessage, chatMode, toggleSidebar
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder={Ask a ${modeDisplay.title} query...}
+                placeholder={`Ask a ${modeDisplay.title} query...`}
                 className="flex-1 px-5 py-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition shadow-inner"
                 disabled={isSending}
             />
             <button
                 type="submit"
                 disabled={isSending || input.trim() === ''}
-                className={px-6 py-3 text-white rounded-full shadow-lg flex items-center justify-center disabled:bg-gray-400 transition transform hover:scale-[1.02] ${buttonClass}}
+                className={`px-6 py-3 text-white rounded-full shadow-lg flex items-center justify-center disabled:bg-gray-400 transition transform hover:scale-[1.02] ${buttonClass}`}
             >
                 <Send className="w-5 h-5 mr-1" />
                 Send
@@ -665,7 +662,7 @@ const App = () => {
   useEffect(() => {
     if (view === 'chat' && chatHistory.length === 0) {
       const queries = modeExampleQueries[chatMode] || modeExampleQueries['default'];
-      const queryList = queries.map((q, i) => ${i + 1}. **${q}**).join('\n');
+      const queryList = queries.map((q, i) => `${i + 1}. **${q}**`).join('\n');
 
       const initialMessage = `Hello! I'm *FloatChat. You are in **${chatMode.toUpperCase()}* mode.
       \nTry one of these queries optimized for this mode:\n\n${queryList}`;
