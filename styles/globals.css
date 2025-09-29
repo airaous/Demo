@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+html {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Custom styles for recharts tooltips */
+.recharts-tooltip-wrapper {
+  border-radius: 8px !important;
+  padding: 10px !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Ensure dynamic Tailwind classes work */
+.text-blue-500, .border-blue-500, .bg-blue-600, .hover\:bg-blue-700, .bg-blue-700, .hover\:bg-blue-600, .text-blue-400,
+.text-red-500, .border-red-500, .bg-red-600, .hover\:bg-red-700, .text-red-400,
+.text-green-500, .border-green-500, .bg-green-600, .hover\:bg-green-700, .text-green-400,
+.bg-gray-400, .bg-gray-900, .text-gray-300, .hover\:bg-gray-700, .border-gray-700, .text-gray-800, .text-blue-600, .text-red-600, .text-green-600, .text-gray-500 {}
